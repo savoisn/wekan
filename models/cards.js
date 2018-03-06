@@ -51,6 +51,10 @@ Cards.attachSchema(new SimpleSchema({
     type: String,
     optional: true,
   },
+  complexity: {
+    type: String,
+    optional: true,
+  },
   labelIds: {
     type: [String],
     optional: true,
@@ -217,6 +221,16 @@ Cards.mutations({
 
   setDescription(description) {
     return {$set: {description}};
+  },
+
+  removeComplexity() {
+    var removedField = {};
+    removedField["complexity"] = true
+
+    return {$unset: removedField};
+  },
+  setComplexity(complexity) {
+    return {$set: {complexity}};
   },
 
   move(swimlaneId, listId, sortIndex) {

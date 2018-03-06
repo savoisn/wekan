@@ -8,7 +8,8 @@ template(name="minicard")
           .minicard-label(class="card-label-{{color}}" title="{{name}}")
     .minicard-title
       +viewer
-        = title
+        | {{ title }} 
+        | {{#if isScrumedAndHasComplexity}}({{complexity}}){{/if}}
     .dates
       if startAt
         .date

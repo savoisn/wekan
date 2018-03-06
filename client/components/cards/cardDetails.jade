@@ -10,12 +10,18 @@ template(name="cardDetails")
         h2.card-details-title.js-card-title(
           class="{{#if canModifyCard}}js-open-inlined-form is-editable{{/if}}")
             +viewer
-              = title
+              | {{ title }} 
+              | {{#if isScrumedAndHasComplexity}}({{complexity}}){{/if}}
               if isWatching
                 i.fa.fa-eye.card-details-watch
 
     if archived
       p.warning {{_ 'card-archived'}}
+
+    if isScrumed
+      p
+        each complexities
+          a.card-complexity.js-card-complexity(class="{{#if isComplexitySelected this}}is-active{{/if}}") {{_ this}}
 
     .card-details-items
       .card-details-item.card-details-item-members
@@ -84,10 +90,10 @@ template(name="cardDetails")
 
     hr
     +checklists(cardId = _id)
-
     hr
     h2
       i.fa.fa-paperclip
+
       | {{_ 'attachments'}}
 
     +attachmentsGalery

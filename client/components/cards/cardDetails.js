@@ -18,6 +18,10 @@ BlazeComponent.extendComponent({
     activitiesComponent.loadNextPage();
   },
 
+  complexities(){
+    return [0,1,2,3,5,8,13,20,40]
+  },
+
   onCreated() {
     this.isLoaded = new ReactiveVar(false);
     this.parentComponent().parentComponent().showOverlay.set(true);
@@ -72,6 +76,24 @@ BlazeComponent.extendComponent({
     this.parentComponent().parentComponent().showOverlay.set(false);
   },
 
+  isComplexitySelected(complexity){
+    const card=this.data()
+    return complexity == card.complexity
+  },
+
+  isScrumedAndHasComplexity() {
+    const card = this.currentData();
+    const boardId = Session.get('currentBoard');
+    const user = Meteor.user();
+    return user && user.hasScrumed(boardId) && card.complexity;
+  },
+
+  isScrumed() {
+    const boardId = Session.get('currentBoard');
+    const user = Meteor.user();
+    return user && user.hasScrumed(boardId);
+  },
+
   events() {
     const events = {
       [`${CSSEvents.transitionend} .js-card-details`]() {
@@ -92,6 +114,14 @@ BlazeComponent.extendComponent({
         evt.preventDefault();
         const description = this.currentComponent().getValue();
         this.data().setDescription(description);
+      },
+      'click .js-card-complexity' (evt) {
+        evt.preventDefault();
+        if (this.data().complexity == evt.target.innerHTML){
+          this.data().removeComplexity();
+        } else { 
+          this.data().setComplexity(evt.target.innerHTML);
+        }
       },
       'submit .js-card-details-title' (evt) {
         evt.preventDefault();

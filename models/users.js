@@ -83,6 +83,10 @@ Users.attachSchema(new SimpleSchema({
     type: Number,
     optional: true,
   },
+  'profile.scrumedBoards': {
+    type: [String],
+    optional: true,
+  },
   'profile.starredBoards': {
     type: [String],
     optional: true,
@@ -167,6 +171,11 @@ Users.helpers({
     return Boards.find({archived: false, _id: {$in: starredBoards}});
   },
 
+  hasScrumed(boardId) {
+    const {scrumedBoards = []} = this.profile;
+    return _.contains(scrumedBoards, boardId);
+  },
+
   hasStarred(boardId) {
     const {starredBoards = []} = this.profile;
     return _.contains(starredBoards, boardId);
@@ -234,6 +243,15 @@ Users.helpers({
 });
 
 Users.mutations({
+  toggleBoardScrum(boardId) {
+    const queryKind = this.hasScrumed(boardId) ? '$pull' : '$addToSet';
+    return {
+      [queryKind]: {
+        'profile.scrumedBoards': boardId,
+      },
+    };
+  },
+
   toggleBoardStar(boardId) {
     const queryKind = this.hasStarred(boardId) ? '$pull' : '$addToSet';
     return {

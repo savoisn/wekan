@@ -52,6 +52,12 @@ BlazeComponent.extendComponent({
     return currentBoard && currentBoard.getWatchLevel(Meteor.userId());
   },
 
+  isScrumed() {
+    const boardId = Session.get('currentBoard');
+    const user = Meteor.user();
+    return user && user.hasScrumed(boardId);
+  },
+
   isStarred() {
     const boardId = Session.get('currentBoard');
     const user = Meteor.user();
@@ -69,6 +75,9 @@ BlazeComponent.extendComponent({
       'click .js-edit-board-title': Popup.open('boardChangeTitle'),
       'click .js-star-board'() {
         Meteor.user().toggleBoardStar(Session.get('currentBoard'));
+      },
+      'click .js-scrum-board'() {
+        Meteor.user().toggleBoardScrum(Session.get('currentBoard'));
       },
       'click .js-open-board-menu': Popup.open('boardMenu'),
       'click .js-change-visibility': Popup.open('boardChangeVisibility'),

@@ -16,6 +16,10 @@ template(name="boardHeaderBar")
                 span
                   = currentBoard.stars
 
+            a.board-header-btn.js-scrum-board(class="{{#if isScrumed}}is-active{{/if}}"
+              title="{{#if isScrumed}}{{_ 'click-to-unscrum'}}{{else}}{{_ 'click-to-scrum'}}{{/if}}")
+              i.fa(class="fa-{{#if isScrumed}}dot-{{/if}}circle-o")
+
             a.board-header-btn(
               class="{{#if currentUser.isBoardAdmin}}js-change-visibility{{else}}is-disabled{{/if}}"
               title="{{_ currentBoard.permission}}")

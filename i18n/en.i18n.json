@@ -135,6 +135,8 @@
     "changePermissionsPopup-title": "Change Permissions",
     "changeSettingsPopup-title": "Change Settings",
     "checklists": "Checklists",
+    "click-to-scrum": "Click to activate scrum on this board.",
+    "click-to-unscrum": "Click to disactive scrum on this board.",
     "click-to-star": "Click to star this board.",
     "click-to-unstar": "Click to unstar this board.",
     "clipboard": "Clipboard or drag & drop",
