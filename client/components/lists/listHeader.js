@@ -1,7 +1,27 @@
 BlazeComponent.extendComponent({
+  mixins() {
+    return [Mixins.ScrumMode];
+  },
+
   canSeeAddCard() {
     const list = Template.currentData();
     return !list.getWipLimit('enabled') || list.getWipLimit('soft') || !this.reachedWipLimit();
+  },
+
+  listAggregatedComplexity(){
+    const list = Template.currentData();
+    const cards = list.cards()
+    var count = 0;
+    var acc = 0;
+    list.cards().forEach((card) => {
+      count += 1;
+      complexity = parseInt(card.complexity)
+      if (!isNaN(complexity)) {
+        acc += complexity
+      }
+    });
+    return acc;
+
   },
 
   editTitle(evt) {

@@ -47,15 +47,12 @@ Template.boardChangeTitlePopup.events({
 });
 
 BlazeComponent.extendComponent({
+  mixins() {
+    return [Mixins.ScrumMode];
+  },
   watchLevel() {
     const currentBoard = Boards.findOne(Session.get('currentBoard'));
     return currentBoard && currentBoard.getWatchLevel(Meteor.userId());
-  },
-
-  isScrumed() {
-    const boardId = Session.get('currentBoard');
-    const user = Meteor.user();
-    return user && user.hasScrumed(boardId);
   },
 
   isStarred() {

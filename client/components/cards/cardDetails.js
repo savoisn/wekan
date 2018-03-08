@@ -2,7 +2,7 @@ const subManager = new SubsManager();
 
 BlazeComponent.extendComponent({
   mixins() {
-    return [Mixins.InfiniteScrolling, Mixins.PerfectScrollbar];
+    return [Mixins.InfiniteScrolling, Mixins.PerfectScrollbar, Mixins.ScrumMode];
   },
 
   calculateNextPeak() {
@@ -79,19 +79,6 @@ BlazeComponent.extendComponent({
   isComplexitySelected(complexity){
     const card=this.data()
     return complexity == card.complexity
-  },
-
-  isScrumedAndHasComplexity() {
-    const card = this.currentData();
-    const boardId = Session.get('currentBoard');
-    const user = Meteor.user();
-    return user && user.hasScrumed(boardId) && card.complexity;
-  },
-
-  isScrumed() {
-    const boardId = Session.get('currentBoard');
-    const user = Meteor.user();
-    return user && user.hasScrumed(boardId);
   },
 
   events() {

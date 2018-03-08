@@ -11,7 +11,7 @@ template(name="cardDetails")
           class="{{#if canModifyCard}}js-open-inlined-form is-editable{{/if}}")
             +viewer
               | {{ title }} 
-              | {{#if isScrumedAndHasComplexity}}({{complexity}}){{/if}}
+              | {{#if isScrumedAndHasComplexity currentData}}({{complexity}}){{/if}}
               if isWatching
                 i.fa.fa-eye.card-details-watch
 

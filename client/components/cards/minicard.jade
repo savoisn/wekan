@@ -9,7 +9,7 @@ template(name="minicard")
     .minicard-title
       +viewer
         | {{ title }} 
-        | {{#if isScrumedAndHasComplexity}}({{complexity}}){{/if}}
+        | {{#if isScrumedAndHasComplexity currentData}}({{complexity}}){{/if}}
     .dates
       if startAt
         .date

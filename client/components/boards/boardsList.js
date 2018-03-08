@@ -1,6 +1,10 @@
 const subManager = new SubsManager();
 
 BlazeComponent.extendComponent({
+  mixins() {
+    return [Mixins.ScrumMode];
+  },
+
   onCreated() {
     Meteor.subscribe('setting');
   },
