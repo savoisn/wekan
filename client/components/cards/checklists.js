@@ -155,6 +155,50 @@ BlazeComponent.extendComponent({
     }
   },
 
+  checkoutCardFromCheckListItem(event){
+    const position = this.currentData().position;
+    const title = this.currentData().item.title;
+
+    const cardId = this.data().cardId;
+    const card = Cards.findOne(cardId);
+
+    const list = Lists.findOne(card.listId);
+
+    console.log(this.currentData());
+    console.log(this.data());
+    console.log(card);
+    console.log(list);
+
+    const members = card.members;
+    const labelIds = card.labels;
+
+    const boardId = card.boardId;
+    const board = Boards.findOne(boardId);
+    let swimlaneId = '';
+    if (board.view === 'board-view-swimlanes')
+      swimlaneId = this.parentComponent().parentComponent().data()._id;
+    else
+      swimlaneId = Swimlanes.findOne({boardId})._id;
+
+    if (title) {
+      const _id = Cards.insert({
+        title,
+        members,
+        labelIds: card.labelIds,
+        listId: card.listId,
+        boardId,
+        sort: card.sort+1,
+        swimlaneId,
+      });
+      // In case the filter is active we need to add the newly inserted card in
+      // the list of exceptions -- cards that are not filtered. Otherwise the
+      // card will disappear instantly.
+      // See https://github.com/wekan/wekan/issues/80
+      Filter.addException(_id);
+    }
+
+  },
+
   events() {
     const events = {
       'click .toggle-delete-checklist-dialog'(event) {
@@ -173,6 +217,8 @@ BlazeComponent.extendComponent({
       'submit .js-edit-checklist-item': this.editChecklistItem,
       'click .js-delete-checklist-item': this.deleteItem,
       'click .confirm-checklist-delete': this.deleteChecklist,
+      'click .js-checkout-card': this.checkoutCardFromCheckListItem,
+
       keydown: this.pressKey,
     }];
   },

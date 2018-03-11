@@ -90,6 +90,9 @@ template(name='itemDetail')
       .item-title.js-open-inlined-form.is-editable(class="{{#if item.isFinished }}is-checked{{/if}}")
         +viewer
           = item.title
+      .item-checkout
+        a.js-checkout-card
+          i.fa.fa-share-square-o
     else
       .materialCheckBox(class="{{#if item.isFinished }}is-checked{{/if}}")
       .item-title(class="{{#if item.isFinished }}is-checked{{/if}}")

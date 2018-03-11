@@ -181,6 +181,11 @@ Template.cardDetailsActionsPopup.events({
     const maxOrder = _.max(this.list().cards(this.swimlaneId).map((c) => c.sort));
     this.move(this.swimlaneId, this.listId, maxOrder + 1);
   },
+  'click .js-restore' (evt) {
+    evt.preventDefault();
+    this.restore();
+    Popup.close();
+  },
   'click .js-archive' (evt) {
     evt.preventDefault();
     this.archive();

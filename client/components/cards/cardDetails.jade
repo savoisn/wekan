@@ -138,6 +138,8 @@ template(name="cardDetailsActionsPopup")
       li: a.js-copy-checklist-cards {{_ 'copyChecklistToManyCardsPopup-title'}}
       unless archived
         li: a.js-archive {{_ 'archive-card'}}
+      else
+        li: a.js-restore {{_ 'restore-card'}}
       li: a.js-more {{_ 'cardMorePopup-title'}}
 
 template(name="moveCardPopup")
